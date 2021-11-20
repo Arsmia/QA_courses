@@ -1,0 +1,251 @@
+Skip to content
+Search or jump to…
+Pull requests
+Issues
+Marketplace
+Explore
+ 
+@Arsmia 
+Arsmia
+/
+group22
+Public
+1
+00
+Code
+Issues
+Pull requests
+2
+Actions
+Projects
+Wiki
+Security
+Insights
+Settings
+group22/SQL_3.txt
+@Arsmia
+Arsmia add SQL_3.txt
+Latest commit b025e22 on 16 Oct
+ History
+ 1 contributor
+219 lines (183 sloc)  10.1 KB
+   
+--1. Создайте базу из представленной картинки.
+--      - У каждой таблицы должно быть поле id
+--      - id автоинкрементальный и является первичным ключом
+      
+create table employees(
+id serial primary key,
+employee_name varchar (50) not null
+);
+
+create table claim(
+id serial,
+service_id int not null,
+employee_id  int not null,
+material_id int not null,
+claim_date date not null,
+sales_manager int not null,
+primary key (id),
+foreign key (employee_id)
+    references employees (id),
+foreign key (service_id)
+	references service (id),
+foreign key (material_id)
+	references materials (id),
+foreign key (sales_manager)
+	references employees (id)	
+);
+  
+create table service(
+id serial primary key,
+service_title varchar(50) not null,
+price int not null
+);
+
+
+create table employees_roles(
+id serial primary key,
+id_role int not null,
+id_employee int not null,
+foreign key (id_employee)
+	references employees (id),
+foreign key (id_role)
+	references roles (id)
+);
+
+create table roles(
+id serial primary key,
+role_title varchar (50) not null
+);
+
+
+
+create table roles_salary(
+id serial primary key,
+id_role int not null,
+id_salary int not null,
+foreign key (id_role)
+	references roles (id),
+foreign key (id_salary)
+	references salary (id)
+);
+
+
+create table salary (
+id serial primary key,
+monthly_salary int not null
+);
+
+create table materials(
+id serial primary key,
+material_title varchar(50),
+amount int not null,
+price int not null,
+);
+
+-- 5. Обновить таблицу Materials. Добавить поле supplier_id которое связано с полем id в таблице Suppliers
+
+alter table materials
+add column supplier_id int;
+select * from materials;
+
+alter table materials 
+add foreign key (supplier_id)
+	references suppliers (id);
+
+
+alter table materials drop foreign key supplier_id; 
+
+
+-- 3. Добавить таблицу Suppliers с полями id, name
+
+create table suppliers(
+id serial primary key,
+supp_name varchar(50) not null
+);
+
+
+-- 6. Обновить таблицу Employees. Добавить varchar поле surname на 50 символов.
+alter table employees 
+add column surname varchar(50);
+select * from employees;
+
+
+-- 7. Обновить таблицу Salary. Добавить varchar поле currency на 7 символов.
+
+alter table salary 
+add currency varchar(7);
+select * from salary;
+
+-- 2. Заполните таблицы данными. Не менее 10 строк в каждой таблице
+
+
+insert into employees (id, employee_name) values (default, 'Michail Jackson')
+insert into employees (id, employee_name) values (default, 'Tupac Shakur')
+insert into employees (id, employee_name) values (default, 'Selena Gomez')
+insert into employees (id, employee_name) values (default, 'Elvis Presley')
+insert into employees (id, employee_name) values (default, 'Beyonce Knowies')
+insert into employees (id, employee_name) values (default, 'Eminem')
+insert into employees (id, employee_name) values (default, 'Jennifer Lorez')
+insert into employees (id, employee_name) values (default, 'Bruno Mars')
+insert into employees (id, employee_name) values (default, 'Dr.Dre')
+insert into employees (id, employee_name) values (default, 'Kurt Cobain')
+select * from employees;
+
+insert into employees_roles (id, id_role, id_employee) values (default, 1, 1);
+insert into employees_roles (id, id_role, id_employee) values (default, 2, 2);
+insert into employees_roles (id, id_role, id_employee) values (default, 3, 3);
+insert into employees_roles (id, id_role, id_employee) values (default, 4, 4);
+insert into employees_roles (id, id_role, id_employee) values (default, 5, 5);
+insert into employees_roles (id, id_role, id_employee) values (default, 6, 6);
+insert into employees_roles (id, id_role, id_employee) values (default, 7, 7);
+insert into employees_roles (id, id_role, id_employee) values (default, 8, 8);
+insert into employees_roles (id, id_role, id_employee) values (default, 9, 9);
+insert into employees_roles (id, id_role, id_employee) values (default, 10, 10);
+select * from employees_roles; 
+
+insert into roles (id, role_title) values (default, 'Pop Singer')
+insert into roles (id, role_title) values (default, 'Hip-Hop Singer')
+insert into roles (id, role_title) values (default, 'Dance-Pop Singer')
+insert into roles (id, role_title) values (default, 'Rock&Roll Singer')
+insert into roles (id, role_title) values (default, 'RnB Singer')
+insert into roles (id, role_title) values (default, 'Rap Singer')
+insert into roles (id, role_title) values (default, 'R&B Singer')
+insert into roles (id, role_title) values (default, 'Funk Singer')
+insert into roles (id, role_title) values (default, 'Rap Singer')
+insert into roles (id, role_title) values (default, 'PunkPock Singer')
+select * from roles;
+
+insert into roles_salary (id, id_role, id_salary) values (default, 1, 1);
+insert into roles_salary (id, id_role, id_salary) values (default, 2, 2);
+insert into roles_salary (id, id_role, id_salary) values (default, 3, 3);
+insert into roles_salary (id, id_role, id_salary) values (default, 4, 4);
+insert into roles_salary (id, id_role, id_salary) values (default, 5, 5);
+insert into roles_salary (id, id_role, id_salary) values (default, 6, 6);
+insert into roles_salary (id, id_role, id_salary) values (default, 7, 7);
+insert into roles_salary (id, id_role, id_salary) values (default, 8, 8);
+insert into roles_salary (id, id_role, id_salary) values (default, 9, 9);
+insert into roles_salary (id, id_role, id_salary) values (default, 10, 10);
+select * from roles_salary;
+
+insert into salary (id, monthly_salary) values (default, 90000000);
+insert into salary (id, monthly_salary) values (default, 7000000);
+insert into salary (id, monthly_salary) values (default, 9000000);
+insert into salary (id, monthly_salary) values (default, 6000000);
+insert into salary (id, monthly_salary) values (default, 8000000);
+insert into salary (id, monthly_salary) values (default, 9000000);
+insert into salary (id, monthly_salary) values (default, 15000000);
+insert into salary (id, monthly_salary) values (default, 9000000);
+insert into salary (id, monthly_salary) values (default, 7800000);
+insert into salary (id, monthly_salary) values (default, 9500000);
+select * from salary;
+
+insert into service (id, service_title, price) values (default, 'Mastermind', 10000000);
+insert into service (id, service_title, price) values (default, 'Producer', 500000);
+insert into service (id, service_title, price) values (default, 'Singer', 250000);
+insert into service (id, service_title, price) values (default, 'Legend', 5000000);
+insert into service (id, service_title, price) values (default, 'Dancer', 300000);
+insert into service (id, service_title, price) values (default, 'Rapping', 600000);
+insert into service (id, service_title, price) values (default, 'Actress', 900000);
+insert into service (id, service_title, price) values (default, 'Vocalist', 300000);
+insert into service (id, service_title, price) values (default, 'Songwriter', 700000);
+insert into service (id, service_title, price) values (default, 'Musician', 10000000);
+select * from service;
+
+insert into materials (id, material_title, amount, price) values (default, 'Microphone', 10, 100);
+insert into materials (id, material_title, amount, price) values (default, 'Earphone', 10, 50);
+insert into materials (id, material_title, amount, price) values (default, 'Laptop', 10, 1000);
+insert into materials (id, material_title, amount, price) values (default, 'Tablet', 10, 350);
+insert into materials (id, material_title, amount, price) values (default, 'Phone', 10,750);
+insert into materials (id, material_title, amount, price) values (default, 'Speaker', 20, 240);
+insert into materials (id, material_title, amount, price) values (default, 'Sound Amplifier', 2, 75);
+insert into materials (id, material_title, amount, price) values (default, 'Guitar', 4, 1500);
+insert into materials (id, material_title, amount, price) values (default, 'Bass guitar', 2, 500);
+insert into materials (id, material_title, amount, price) values (default, 'Piano', 1, 3000);
+select * from materials;
+
+
+insert into claim (id, service_id, employee_id, material_id, claim_date, sales_manager) values (default, 1, 1, 1, '2025-01-01', 8);
+insert into claim (id, service_id, employee_id, material_id, claim_date, sales_manager) values (default, 2, 2, 2, '2025-01-01', 2);
+insert into claim (id, service_id, employee_id, material_id, claim_date, sales_manager) values (default, 3, 3, 3, '2025-01-01', 1);
+insert into claim (id, service_id, employee_id, material_id, claim_date, sales_manager) values (default, 4, 4, 4, '2025-01-01', 3);
+insert into claim (id, service_id, employee_id, material_id, claim_date, sales_manager) values (default, 5, 5, 5, '2025-01-01', 5);
+insert into claim (id, service_id, employee_id, material_id, claim_date, sales_manager) values (default, 6, 6, 6, '2025-01-01', 4);
+insert into claim (id, service_id, employee_id, material_id, claim_date, sales_manager) values (default, 7, 7, 7, '2025-01-01', 7);
+insert into claim (id, service_id, employee_id, material_id, claim_date, sales_manager) values (default, 8, 8, 8, '2025-01-01', 6);
+insert into claim (id, service_id, employee_id, material_id, claim_date, sales_manager) values (default, 9, 9, 9, '2025-01-01', 9);
+insert into claim (id, service_id, employee_id, material_id, claim_date, sales_manager) values (default, 10, 10, 10, '2025-01-01', 10);
+select * from claim;
+-- 4. Добавить 10 строк поставщиков в таблицу Suppliers
+insert into suppliers (id, supp_name) values (default, 'Yamaha');
+insert into suppliers (id, supp_name) values (default, 'Shure');
+insert into suppliers (id, supp_name) values (default, 'Casio');
+insert into suppliers (id, supp_name) values (default, 'Fender');
+insert into suppliers (id, supp_name) values (default, 'Ibanez');
+insert into suppliers (id, supp_name) values (default, 'Korg');
+insert into suppliers (id, supp_name) values (default, 'Gibson');
+insert into suppliers (id, supp_name) values (default, 'Audio-Technica');
+insert into suppliers (id, supp_name) values (default, 'JBL');
+insert into suppliers (id, supp_name) values (default, 'Adata');
+select * from suppliers;
